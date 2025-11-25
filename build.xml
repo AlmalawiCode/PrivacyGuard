@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    PrivacyGuard Build File
+    Privacy-Preserving Synthetic Data Generation for IoT Sensor Networks
+
+    Author: Abdulmohsen Almalawi <balmalowy@kau.edu.sa>
+
+    Usage:
+        ant compile    - Compile all Java source files
+        ant run        - Run the menu-driven interface
+        ant clean      - Remove compiled class files
+        ant jar        - Create executable JAR file
+-->
+<project name="PrivacyGuard" default="compile" basedir=".">
+
+    <!-- Project properties -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build/classes"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="main.class" value="privacyguard.MenuDrivenInterface"/>
+
+    <!-- Classpath for compilation and execution -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Initialize build directories -->
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="output"/>
+    </target>
+
+    <!-- Compile Java source files -->
+    <target name="compile" depends="init" description="Compile all Java source files">
+        <echo message="Compiling PrivacyGuard source files..."/>
+        <javac srcdir="${src.dir}"
+               destdir="${build.dir}"
+               classpathref="classpath"
+               includeantruntime="false"
+               debug="true"
+               encoding="UTF-8">
+            <compilerarg value="-Xlint:unchecked"/>
+        </javac>
+        <echo message="Compilation complete!"/>
+    </target>
+
+    <!-- Run the menu-driven interface -->
+    <target name="run" depends="compile" description="Run the menu-driven interface">
+        <echo message="Starting PrivacyGuard Menu Interface..."/>
+        <java classname="${main.class}"
+              fork="true"
+              failonerror="true">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${build.dir}"/>
+            </classpath>
+            <!-- Increase memory for large datasets -->
+            <jvmarg value="-Xmx8g"/>
+            <jvmarg value="-Xms2g"/>
+            <!-- Java 9+ module access for Weka compatibility -->
+            <jvmarg value="--add-opens=java.base/java.lang=ALL-UNNAMED"/>
+        </java>
+    </target>
+
+    <!-- Create executable JAR file -->
+    <target name="jar" depends="compile" description="Create executable JAR file">
+        <echo message="Creating PrivacyGuard JAR file..."/>
+        <jar destfile="${dist.dir}/PrivacyGuard.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Class-Path" value="../lib/weka.jar ../lib/WekaKNNVWC_1.1.jar"/>
+            </manifest>
+        </jar>
+        <echo message="JAR file created: ${dist.dir}/PrivacyGuard.jar"/>
+    </target>
+
+    <!-- Clean build directories -->
+    <target name="clean" description="Remove compiled class files">
+        <echo message="Cleaning build directories..."/>
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <echo message="Clean complete!"/>
+    </target>
+
+    <!-- Rebuild from scratch -->
+    <target name="rebuild" depends="clean,compile" description="Clean and recompile"/>
+
+</project>
