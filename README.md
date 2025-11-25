@@ -174,11 +174,11 @@ PrivacyGuard/
 
 ## Datasets
 
-**Note:** All datasets are provided as compressed ZIP files to reduce repository size. Before running the application, extract the ZIP files in the `datasets/Original/` folder.
+**Note:** All datasets are provided as compressed tar.xz files to reduce repository size. Before running the application, extract the files in the `datasets/Original/` folder.
 
 ```bash
 cd datasets/Original
-unzip "*.zip"
+tar -xf "*.tar.xz"
 ```
 
 | Dataset | Records | Features | Description |
