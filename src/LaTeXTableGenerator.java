@@ -676,7 +676,7 @@ public class LaTeXTableGenerator {
             case "Equal_Width_Binning":
                 return "Equal Width Binning";
             case "kmeans":
-                return "k-means (k=500)";
+                return "k-means (k=1000)";
             case "k_anonymity":
                 return "k-anonymity (k=5)";
             case "LaplaceDP":

@@ -19,7 +19,7 @@ import java.util.Scanner;
  * Generates synthetic datasets using various privacy-preserving methods:
  * 1. PrivacyGuard (VWC)
  * 2. Equal-Width Binning
- * 3. k-means (k=500)
+ * 3. k-means (k=1000)
  * 4. k-anonymity (k=5)
  * 5. Laplace DP (ε=1.0)
  *
@@ -42,7 +42,7 @@ public class SyntheticDataGenerator {
     private static final String[] METHOD_NAMES = {
         "PrivacyGuard (VWC)",
         "Equal-Width Binning",
-        "k-means (k=500)",
+        "k-means (k=1000)",
         "k-anonymity (k=5)",
         "Laplace DP (ε=1.0)"
     };
@@ -223,7 +223,7 @@ public class SyntheticDataGenerator {
                     break;
 
                 case 2: // k-means
-                    KMeansBaseline kmeans = new KMeansBaseline(500);
+                    KMeansBaseline kmeans = new KMeansBaseline(1000);
                     syntheticData = kmeans.generateSyntheticData(originalData);
                     break;
 
@@ -394,7 +394,7 @@ public class SyntheticDataGenerator {
         switch (methodIndex) {
             case 0: return "maxClusterSize=" + clusterSize + ", betaPercentage=0.5%";
             case 1: return "numBins=10";
-            case 2: return "k=500";
+            case 2: return "k=1000";
             case 3: return "k=5";
             case 4: return "epsilon=1.0";
             default: return "unknown";

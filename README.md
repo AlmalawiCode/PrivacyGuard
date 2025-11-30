@@ -2,6 +2,10 @@
 
 **Privacy-Preserving Synthetic Data Generation for IoT Sensor Networks**
 
+[![Java](https://img.shields.io/badge/Java-11%2B-orange)](https://www.oracle.com/java/)
+[![Apache Ant](https://img.shields.io/badge/Build-Apache%20Ant-blue)](https://ant.apache.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
 Author: Abdulmohsen Almalawi <balmalowy@kau.edu.sa>
 
 ---
@@ -10,6 +14,8 @@ Author: Abdulmohsen Almalawi <balmalowy@kau.edu.sa>
 
 PrivacyGuard is a clustering-based approach for privacy-preserving data publishing in IoT sensor networks. It uses Various-Width Clustering (VWC) to transform original data into privacy-preserving synthetic representations while maintaining utility for machine learning tasks.
 
+The approach achieves O(mnc) time complexity, where m is the number of features, n is the number of records, and c is the number of clusters per feature. This compares favourably to k-means clustering which requires O(mnkI) for k clusters over I iterations.
+
 ## Features
 
 - **PrivacyGuard (VWC)**: Various-Width Clustering for privacy-preserving transformation
@@ -17,6 +23,7 @@ PrivacyGuard is a clustering-based approach for privacy-preserving data publishi
 - **Classification Evaluation**: J48, Random Forest, Naive Bayes
 - **Privacy Attack Evaluation**: Re-Identification Attack, Linkage Attack
 - **Parameter Exploration**: Analyze impact of s_max on utility/privacy trade-off
+- **Complexity Benchmark**: Empirical computational complexity analysis
 
 ---
 
@@ -65,6 +72,7 @@ The menu-driven interface will guide you through all operations.
 [5] Privacy Attack Evaluation - Test re-identification & linkage attacks
 [6] Parameter Exploration - Analyze impact of s_max on utility/privacy
 [7] Explore Datasets - View dataset details and distributions
+[8] Complexity Benchmark - Measure computational complexity empirically
 [0] Exit
 ```
 
@@ -81,7 +89,7 @@ Select method: All methods
 Generates synthetic data using all methods:
 - PrivacyGuard (VWC) with s_max=5
 - Equal Width Binning (10 bins)
-- K-Means (k=500)
+- K-Means (k=1000)
 - K-Anonymity (k=5)
 - Laplace DP (epsilon=1.0)
 
@@ -119,6 +127,17 @@ Select dataset: (choose dataset)
 ```
 Analyzes impact of s_max values {5, 10, 15, 20, 25, 30, 35}.
 
+### 7. Complexity Benchmark
+```
+Select option: 8
+Select dataset: Edge-IIoTset (recommended)
+```
+Measures computational complexity empirically by testing all methods at 10%-100% data sizes.
+After running, generate plots with:
+```bash
+python scripts/plot_complexity.py
+```
+
 ---
 
 ## Project Structure
@@ -139,6 +158,7 @@ PrivacyGuard/
 │   ├── LaTeXTableGenerator.java
 │   ├── PrivacyAttackEvaluator.java
 │   ├── SyntheticDataGenerationWithParameterExploration.java
+│   ├── ComplexityBenchmark.java
 │   ├── PrivacyGuardGenerator.java
 │   ├── EqualWidthBinning.java
 │   ├── KMeansBaseline.java
@@ -158,6 +178,7 @@ PrivacyGuard/
 │       └── MQTTset.arff
 ├── scripts/                  # Python scripts for figures
 │   ├── README.md
+│   ├── plot_complexity.py
 │   ├── generate_comparison_figures.py
 │   ├── generate_dataset_comparison_figures.py
 │   └── collect_all_times.py
@@ -167,7 +188,8 @@ PrivacyGuard/
     ├── 3_classification/     # [Menu 3] Classification results
     ├── 4_latex/              # [Menu 4] LaTeX tables
     ├── 5_privacy_attacks/    # [Menu 5] Privacy attack results
-    └── 6_parameter_exploration/  # [Menu 6] Parameter analysis
+    ├── 6_parameter_exploration/  # [Menu 6] Parameter analysis
+    └── complexity_plots/     # [Menu 8] Complexity benchmark plots
 ```
 
 ---
@@ -201,7 +223,7 @@ privacyguard.beta_percent=5
 
 # Baseline parameters
 ewb.num_bins=100
-kmeans.k=500
+kmeans.k=1000
 kanonymity.k=5
 laplace.epsilon=1.0
 
@@ -225,6 +247,7 @@ After running, results are saved in organized folders:
 | 4. LaTeX Tables | `output/4_latex/` | LaTeX table files |
 | 5. Privacy Attacks | `output/5_privacy_attacks/` | Attack evaluation results |
 | 6. Parameter Exploration | `output/6_parameter_exploration/` | Parameter analysis reports |
+| 8. Complexity Benchmark | `output/complexity_plots/` | Complexity analysis plots |
 
 ---
 

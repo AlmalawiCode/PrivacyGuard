@@ -62,6 +62,10 @@ public class MenuDrivenInterface {
                     // Explore datasets
                     exploreDatasets();
                     break;
+                case 8:
+                    // Complexity Benchmark
+                    runComplexityBenchmark();
+                    break;
                 case 0:
                     System.out.println("\n✓ Exiting system. Goodbye!");
                     running = false;
@@ -88,8 +92,11 @@ public class MenuDrivenInterface {
         System.out.println("[5] Privacy Attack Evaluation - Test re-identification & linkage attacks");
         System.out.println("[6] Parameter Exploration - Analyze impact of s_max on utility/privacy");
         System.out.println("[7] Explore Datasets - View dataset details and distributions");
+        System.out.println("[8] Complexity Benchmark - Measure computational complexity empirically");
         System.out.println("[0] Exit");
-        System.out.print("\nEnter choice: ");
+        System.out.println();
+        System.out.print("Enter choice: ");
+        System.out.flush();
     }
 
     /**
@@ -105,6 +112,7 @@ public class MenuDrivenInterface {
             System.out.println("[1] Show Dataset Details");
             System.out.println("[0] Back to Main Menu");
             System.out.print("\nEnter choice: ");
+            System.out.flush();
 
             int choice = getIntInput(scanner);
 
@@ -152,6 +160,7 @@ public class MenuDrivenInterface {
         }
         System.out.println("[" + files.length + "] Back");
         System.out.print("\nEnter choice (0-" + files.length + "): ");
+        System.out.flush();
 
         int choice = getIntInput(scanner);
 
@@ -296,6 +305,7 @@ public class MenuDrivenInterface {
             System.out.println("[5] Evaluate All Datasets");
             System.out.println("[0] Back to Main Menu");
             System.out.print("\nEnter choice: ");
+            System.out.flush();
 
             int choice = getIntInput(scanner);
 
@@ -351,6 +361,7 @@ public class MenuDrivenInterface {
             System.out.println("[3] Generate ALL Summary Tables (4 Options)");
             System.out.println("[0] Back to Main Menu");
             System.out.print("\nEnter choice: ");
+            System.out.flush();
 
             int choice = getIntInput(scanner);
 
@@ -374,6 +385,70 @@ public class MenuDrivenInterface {
                 }
             } catch (Exception e) {
                 System.err.println("\n✗ Error during LaTeX generation: " + e.getMessage());
+                e.printStackTrace();
+                System.out.println();
+            }
+        }
+    }
+
+    /**
+     * Run complexity benchmark to measure computational complexity empirically
+     */
+    private static void runComplexityBenchmark() {
+        boolean benchmarking = true;
+
+        while (benchmarking) {
+            System.out.println("\n╔═══════════════════════════════════════════════════════════════╗");
+            System.out.println("║              Complexity Benchmark                             ║");
+            System.out.println("╚═══════════════════════════════════════════════════════════════╝");
+            System.out.println("[1] Run Benchmark on Edge-IIoTset (default)");
+            System.out.println("[2] Run Benchmark on bot_loT");
+            System.out.println("[3] Run Benchmark on CICIoT2023");
+            System.out.println("[4] Run Benchmark on MQTTset");
+            System.out.println("[5] Run PrivacyGuard Only (faster)");
+            System.out.println("[0] Back to Main Menu");
+            System.out.print("\nEnter choice: ");
+            System.out.flush();
+
+            int choice = getIntInput(scanner);
+
+            try {
+                switch (choice) {
+                    case 1:
+                        System.out.println("\n⏳ Running complexity benchmark on Edge-IIoTset...");
+                        System.out.println("   This will test all methods at 10%-100% data sizes.\n");
+                        ComplexityBenchmark.runBenchmark("datasets/Original/Edge-IIoTset.arff", "Edge-IIoTset");
+                        System.out.println("\n✓ Benchmark complete! Run scripts/plot_complexity.py to generate plots.");
+                        break;
+                    case 2:
+                        System.out.println("\n⏳ Running complexity benchmark on bot_loT...");
+                        ComplexityBenchmark.runBenchmark("datasets/Original/bot_loT.arff", "bot_loT");
+                        System.out.println("\n✓ Benchmark complete! Run scripts/plot_complexity.py to generate plots.");
+                        break;
+                    case 3:
+                        System.out.println("\n⏳ Running complexity benchmark on CICIoT2023...");
+                        ComplexityBenchmark.runBenchmark("datasets/Original/CICIoT2023.arff", "CICIoT2023");
+                        System.out.println("\n✓ Benchmark complete! Run scripts/plot_complexity.py to generate plots.");
+                        break;
+                    case 4:
+                        System.out.println("\n⏳ Running complexity benchmark on MQTTset...");
+                        ComplexityBenchmark.runBenchmark("datasets/Original/MQTTset.arff", "MQTTset");
+                        System.out.println("\n✓ Benchmark complete! Run scripts/plot_complexity.py to generate plots.");
+                        break;
+                    case 5:
+                        System.out.println("\n⏳ Running PrivacyGuard-only benchmark on Edge-IIoTset...");
+                        ComplexityBenchmark.runSingleMethodBenchmark("datasets/Original/Edge-IIoTset.arff", "Edge-IIoTset", "PrivacyGuard");
+                        System.out.println("\n✓ Benchmark complete! Run scripts/plot_complexity.py to generate plots.");
+                        break;
+                    case 0:
+                        benchmarking = false;
+                        System.out.println("\n← Returning to Main Menu...\n");
+                        break;
+                    default:
+                        System.out.println("\n✗ Invalid choice. Please try again.\n");
+                }
+            } catch (Exception e) {
+                System.err.println("\n✗ Error during benchmark: " + e.getMessage());
                 e.printStackTrace();
                 System.out.println();
             }
