@@ -25,9 +25,6 @@ import java.util.*;
  * - Utility: Low-Medium (significant generalization)
  * - Speed: Slow (distance computations)
  *
- * Note:
- * This is a simplified implementation. Full k-anonymity would use
- * more sophisticated generalization hierarchies and suppression.
  *
  * @author Abdulmohsen Almalawi <balmalowy@kau.edu.sa>
  */
