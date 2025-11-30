@@ -203,12 +203,12 @@ cd datasets/Original
 tar -xf "*.tar.xz"
 ```
 
-| Dataset | Records | Features | Description |
-|---------|---------|----------|-------------|
-| N-BaIoT (bot_loT) | 142,562 | 115 | IoT botnet traffic |
-| CICIoT2023 | 352,274 | 46 | IoT network intrusion |
-| Edge-IIoTset | 157,800 | 61 | Industrial IoT security |
-| MQTTset | 26,182 | 33 | MQTT protocol traffic |
+| Dataset | Total Records | Normal | Abnormal | Attack Types | Features |
+|---------|---------------|--------|----------|--------------|----------|
+| N-BaIoT (bot_loT) | 146,609 | 61,565 | 85,044 | 8 | 115 |
+| CICIoT2023 | 352,274 | 7,686 | 344,588 | 7 | 46 |
+| Edge-IIoTset | 525,263 | 335,605 | 189,658 | 13 | 70 |
+| MQTTset | 45,600 | 420 | 45,180 | 5 | 30 |
 
 ---
 
